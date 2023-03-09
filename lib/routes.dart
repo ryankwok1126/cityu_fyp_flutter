@@ -6,5 +6,5 @@ import 'package:flutter/material.dart';
 Map<String, WidgetBuilder> routes = {
   PageViewScreen.routeName: (context) => const PageViewScreen(),
   ReportPage.routeName: (context) => const ReportPage(),
-  Meeting.routeName: (context) => const Meeting(),
+  // Meeting.routeName: (context) => const Meeting()
 };

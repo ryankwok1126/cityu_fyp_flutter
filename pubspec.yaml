@@ -40,7 +40,7 @@ dependencies:
   http: ^0.13.5
   flutter_spinkit: ^5.1.0
   fl_chart: ^0.61.0
-  jitsi_meet_wrapper: ^0.0.6
+  # jitsi_meet_wrapper: ^0.0.6
 
 dev_dependencies:
   flutter_test:

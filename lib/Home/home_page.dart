@@ -37,9 +37,9 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  _host() {
-    Navigator.pushNamed(context, Meeting.routeName);
-  }
+  // _host() {
+  //   Navigator.pushNamed(context, Meeting.routeName);
+  // }
 
   @override
   void initState() {
