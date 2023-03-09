@@ -109,20 +109,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.18.0"
-  jitsi_meet_wrapper:
-    dependency: "direct main"
-    description:
-      name: jitsi_meet_wrapper
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.6"
-  jitsi_meet_wrapper_platform_interface:
-    dependency: transitive
-    description:
-      name: jitsi_meet_wrapper_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.4"
   lints:
     dependency: transitive
     description:
@@ -158,13 +144,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.2"
-  plugin_platform_interface:
-    dependency: transitive
-    description:
-      name: plugin_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.4"
   sky_engine:
     dependency: transitive
     description: flutter
