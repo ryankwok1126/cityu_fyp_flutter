@@ -3,6 +3,7 @@ import 'package:cityu_fyp_flutter/Report/report_list_page.dart';
 import 'package:cityu_fyp_flutter/Setting/setting_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PageViewScreen extends StatefulWidget {
   const PageViewScreen({Key? key}) : super(key: key);
@@ -14,8 +15,16 @@ class PageViewScreen extends StatefulWidget {
 }
 
 class _PageViewScreenState extends State<PageViewScreen> {
+  String _role = '';
   int _selectedIndex = 0;
   final _controller = PageController(initialPage: 0);
+
+  _getRole() async {
+    final pref = await SharedPreferences.getInstance();
+    setState(() {
+      _role = pref.getString('role') ?? '';
+    });
+  }
 
   void _onTappedBar(int value) {
     setState(() {
@@ -23,6 +32,12 @@ class _PageViewScreenState extends State<PageViewScreen> {
     });
     _controller.animateToPage(value,
         duration: const Duration(milliseconds: 500), curve: Curves.ease);
+  }
+
+  @override
+  void initState() {
+    _getRole();
+    super.initState();
   }
 
   @override
@@ -35,16 +50,17 @@ class _PageViewScreenState extends State<PageViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
+        items: [
+          const BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.house_fill),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.doc_chart_fill),
-            label: 'Report',
-          ),
-          BottomNavigationBarItem(
+          if (_role == 'T')
+            const BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.doc_chart_fill),
+              label: 'Report',
+            ),
+          const BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.gear_solid),
             label: 'Setting',
           )
@@ -56,10 +72,10 @@ class _PageViewScreenState extends State<PageViewScreen> {
       ),
       body: PageView(
         controller: _controller,
-        children: const [
-          HomePage(),
-          ReportListPage(),
-          SettingPage(),
+        children: [
+          const HomePage(),
+          if (_role == 'T') const ReportListPage(),
+          const SettingPage(),
         ],
         onPageChanged: (page) {
           setState(() {

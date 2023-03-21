@@ -400,7 +400,7 @@ class _ReportPageState extends State<ReportPage> {
       backgroundColor: MyColors.lightGrey,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(right: 60.0),
+          padding: const EdgeInsets.symmetric(horizontal: 60.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -408,25 +408,26 @@ class _ReportPageState extends State<ReportPage> {
               _buildTitle(),
               const SizedBox(height: 54.0),
               if (_isloadingOverview)
-                const Expanded(
-                  child: SpinKitCircle(
-                    color: Color(0xff454545),
-                    size: 72.0,
+                Expanded(
+                  child: Column(
+                    children: const [
+                      Expanded(
+                        child: SpinKitCircle(
+                          color: Color(0xff454545),
+                          size: 72.0,
+                        ),
+                      ),
+                      SizedBox(height: 40.0),
+                    ],
                   ),
                 ),
               if (!_isloadingOverview)
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 60.0),
-                    child: _buildOverview(),
-                  ),
+                  child: _buildOverview(),
                 ),
               const SizedBox(height: 50.0),
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 60.0),
-                  child: _buildIndividual(),
-                ),
+                child: _buildIndividual(),
               ),
               const SizedBox(height: 40.0),
             ],

@@ -1,16 +1,59 @@
 PODS:
+  - camera_avfoundation (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
+  - flutter_native_splash (0.0.1):
+    - Flutter
+  - jitsi_meet_wrapper (0.0.1):
+    - Flutter
+    - JitsiMeetSDK (= 5.0.2)
+  - JitsiMeetSDK (5.0.2)
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - TensorFlowLiteC (2.2.0)
+  - tflite (1.1.2):
+    - Flutter
+    - TensorFlowLiteC
 
 DEPENDENCIES:
+  - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
   - Flutter (from `Flutter`)
+  - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
+  - jitsi_meet_wrapper (from `.symlinks/plugins/jitsi_meet_wrapper/ios`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
+  - TensorFlowLiteC (= 2.2.0)
+  - tflite (from `.symlinks/plugins/tflite/ios`)
+
+SPEC REPOS:
+  trunk:
+    - JitsiMeetSDK
+    - TensorFlowLiteC
 
 EXTERNAL SOURCES:
+  camera_avfoundation:
+    :path: ".symlinks/plugins/camera_avfoundation/ios"
   Flutter:
     :path: Flutter
+  flutter_native_splash:
+    :path: ".symlinks/plugins/flutter_native_splash/ios"
+  jitsi_meet_wrapper:
+    :path: ".symlinks/plugins/jitsi_meet_wrapper/ios"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/ios"
+  tflite:
+    :path: ".symlinks/plugins/tflite/ios"
 
 SPEC CHECKSUMS:
+  camera_avfoundation: 3125e8cd1a4387f6f31c6c63abb8a55892a9eeeb
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
+  jitsi_meet_wrapper: f78c5a212de5dfbadcd81ce559217f3661a26ce7
+  JitsiMeetSDK: edcac8e2b92ee0c7f3e75bd0aefefbe9faccfc93
+  shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
+  TensorFlowLiteC: b3ab9e867b0b71052ca102a32a786555b330b02e
+  tflite: 7acd11db0915e2d90ab90474413068568eb605f0
 
-PODFILE CHECKSUM: 9299fab1a1bbfbe222b69637a3e039628ae02c9d
+PODFILE CHECKSUM: 9532458be0e5098edfd2d60a32306c95afa01d5e
 
 COCOAPODS: 1.11.3

@@ -22,10 +22,6 @@ class _ReportPieChartState extends State<ReportPieChart> {
 
   _countTotal() {
     _total = widget.focus + widget.notFocus + widget.undefine;
-    print(widget.focus);
-    print(widget.notFocus);
-    print(widget.undefine);
-    print(_total);
   }
 
   List<PieChartSectionData> showingSections() {

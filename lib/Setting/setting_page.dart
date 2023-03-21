@@ -1,6 +1,8 @@
+import 'package:cityu_fyp_flutter/Login/login_page.dart';
 import 'package:cityu_fyp_flutter/my_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -10,8 +12,14 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  _logout() {
-    print('logout');
+  _logout() async {
+    final pref = await SharedPreferences.getInstance();
+    pref.remove('id');
+    pref.remove('role');
+    pref.remove('language');
+    if (mounted) {
+      Navigator.pushReplacementNamed(context, LoginPage.routeName);
+    }
   }
 
   _buildTitle() {
