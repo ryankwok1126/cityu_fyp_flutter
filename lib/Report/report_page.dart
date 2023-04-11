@@ -170,23 +170,50 @@ class _ReportPageState extends State<ReportPage> {
   _buildOverview() {
     return Column(
       children: [
+        const Text(
+          'Concentration Overview',
+          style: TextStyle(
+              fontSize: 28.0,
+              fontWeight: FontWeight.w600,
+              color: Color(0xff595959)),
+        ),
         Expanded(
-          child: Stack(
+          child: Row(
             children: [
-              ReportLineChart(
-                overviewData: _overviewData,
-                studentData: _studentData,
+              const RotatedBox(
+                quarterTurns: 3,
+                child: Text('levels',
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xff595959))),
               ),
-              if (_isloadingIndividual)
-                const Center(
-                  child: SpinKitCircle(
-                    color: Color(0xff454545),
-                    size: 72.0,
-                  ),
-                )
+              Expanded(
+                child: Stack(
+                  children: [
+                    ReportLineChart(
+                      overviewData: _overviewData,
+                      studentData: _studentData,
+                    ),
+                    if (_isloadingIndividual)
+                      const Center(
+                        child: SpinKitCircle(
+                          color: Color(0xff454545),
+                          size: 72.0,
+                        ),
+                      )
+                  ],
+                ),
+              ),
             ],
           ),
         ),
+        const SizedBox(height: 8.0),
+        const Text('durations(min)',
+            style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.w600,
+                color: Color(0xff595959))),
         const SizedBox(height: 20.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -198,7 +225,7 @@ class _ReportPageState extends State<ReportPage> {
             ),
             const SizedBox(width: 10),
             const Text(
-              'Overview',
+              'Average',
               style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.w600,
@@ -214,7 +241,7 @@ class _ReportPageState extends State<ReportPage> {
             if (!_isloadingIndividual) const SizedBox(width: 10),
             if (!_isloadingIndividual)
               Text(
-                _selectedSid.toString(),
+                'S${_selectedSid.toString()}',
                 style: const TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.w600,
@@ -265,7 +292,7 @@ class _ReportPageState extends State<ReportPage> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        _studentId[index]['sid'].toString(),
+                                        'S${_studentId[index]['sid']}',
                                         style: TextStyle(
                                             fontSize: 32.0,
                                             fontWeight: FontWeight.w600,
@@ -319,6 +346,12 @@ class _ReportPageState extends State<ReportPage> {
               Expanded(
                 child: Column(
                   children: [
+                    const SizedBox(height: 20.0),
+                    const Text('Individual Concentration report',
+                        style: TextStyle(
+                            fontSize: 28.0,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xff595959))),
                     Expanded(
                       child: ReportPieChart(
                         focus: _countFocus,

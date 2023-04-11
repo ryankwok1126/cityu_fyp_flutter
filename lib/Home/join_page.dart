@@ -110,7 +110,7 @@ class _JoinPageState extends State<JoinPage> {
   _buildTitle() {
     return const Center(
       child: Text(
-        'Start Lesson',
+        'Join Lesson',
         style: TextStyle(
           fontSize: 64.0,
           fontWeight: FontWeight.w600,

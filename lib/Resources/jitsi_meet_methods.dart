@@ -1,51 +1,8 @@
-import 'package:camera/camera.dart';
 import 'package:cityu_fyp_flutter/APIManager/api_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet_wrapper/jitsi_meet_wrapper.dart';
-import 'package:tflite/tflite.dart';
 
 class JitsiMeetMethods {
-  late CameraController cameraController;
-  late CameraImage cameraImage;
-  String output = '';
-
-  Future _loadModel() async {
-    Tflite.close();
-    await Tflite.loadModel(
-        model: "assets/ai_model/emotion_recognition_model.tflite",
-        labels: "assets/ai_model/emotion_recognition_label.txt");
-  }
-
-  _initCamera() async {
-    List<CameraDescription> cameras = await availableCameras();
-    cameraController = CameraController(cameras[1], ResolutionPreset.medium);
-    cameraController.initialize().then((value) {
-      cameraController.startImageStream((image) => {
-            cameraImage = image,
-            runModel(),
-          });
-    });
-  }
-
-  runModel() async {
-    var prediction = await Tflite.runModelOnFrame(
-      bytesList: cameraImage.planes.map((plane) {
-        return plane.bytes;
-      }).toList(),
-      imageHeight: cameraImage.height,
-      imageWidth: cameraImage.width,
-      imageMean: 127.5,
-      imageStd: 127.5,
-      rotation: 90,
-      numResults: 1,
-      threshold: 0.4,
-      asynch: true,
-    );
-    prediction?.forEach((element) {
-      output = element['label'];
-    });
-  }
-
   _setLessonStatus(int lessonId, int status) async {
     String path = '/lesson/set_lesson_status';
     Map<String, dynamic> params = {
@@ -86,9 +43,6 @@ class JitsiMeetMethods {
             debugPrint("onOpened");
             if (lessonId != null) {
               _setLessonStatus(lessonId, 1);
-            } else {
-              _loadModel();
-              _initCamera();
             }
           },
           onConferenceWillJoin: (url) {
@@ -139,9 +93,6 @@ class JitsiMeetMethods {
             debugPrint("onClosed");
             if (lessonId != null) {
               _setLessonStatus(lessonId, 2);
-            } else {
-              cameraController.stopImageStream();
-              Tflite.close();
             }
           },
         ),

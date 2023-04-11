@@ -43,8 +43,6 @@ dependencies:
   jitsi_meet_wrapper: 0.0.5
   flutter_native_splash: ^2.2.17
   shared_preferences: ^2.0.18
-  camera: ^0.10.3+2
-  tflite: ^1.1.2
 
 dev_dependencies:
   flutter_test:
