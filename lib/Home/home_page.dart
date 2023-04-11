@@ -1,9 +1,11 @@
 import 'package:cityu_fyp_flutter/APIManager/api_manager.dart';
-import 'package:cityu_fyp_flutter/Home/meeting.dart';
+import 'package:cityu_fyp_flutter/Home/host_page.dart';
+import 'package:cityu_fyp_flutter/Home/join_page.dart';
 import 'package:cityu_fyp_flutter/my_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,14 +15,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String _role = '';
   List _lessonsDetail = [];
   List _lessonsSubject = [];
   bool _isloadingSchedule = true;
 
-  _getSchedule() {
-    String path = '/lesson/get_schedule';
+  _getRole() async {
+    final pref = await SharedPreferences.getInstance();
+    setState(() {
+      _role = pref.getString('role') ?? '';
+    });
+    _getSchedule();
+  }
+
+  _getSchedule() async {
+    _lessonsDetail = [];
+    _lessonsSubject = [];
+    final pref = await SharedPreferences.getInstance();
+    String path = '';
+    if (_role == 'T') {
+      path = '/lesson/get_teacher_schedule';
+    } else {
+      path = '/lesson/get_student_schedule';
+    }
     Map<String, dynamic> params = {
-      'member_id': 1,
+      'member_id': pref.getInt('id'),
     };
     ApiManager.instance.post(path, params).then((response) async {
       if (mounted) {
@@ -28,8 +47,10 @@ class _HomePageState extends State<HomePage> {
         Map<String, dynamic> data = response;
         if (data['status'] == 1) {
           setState(() {
-            _lessonsDetail = data['res'][0]['lessons_detail'];
-            _lessonsSubject = data['res'][0]['subjects'];
+            data['res'].forEach((lesson) => {
+                  _lessonsDetail.add(lesson['lessons_detail']),
+                  _lessonsSubject.add(lesson['subjects'])
+                });
             _isloadingSchedule = false;
           });
         }
@@ -37,13 +58,17 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // _host() {
-  //   Navigator.pushNamed(context, Meeting.routeName);
-  // }
+  _host() {
+    Navigator.pushNamed(context, HostPage.routeName);
+  }
+
+  _join() {
+    Navigator.pushNamed(context, JoinPage.routeName);
+  }
 
   @override
   void initState() {
-    _getSchedule();
+    _getRole();
     super.initState();
   }
 
@@ -64,7 +89,9 @@ class _HomePageState extends State<HomePage> {
     return SizedBox(
       height: 316.0,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          _host();
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: MyColors.lightGreen,
           elevation: 8.0,
@@ -90,7 +117,9 @@ class _HomePageState extends State<HomePage> {
     return SizedBox(
       height: 316.0,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          _join();
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: MyColors.lightGreen,
           elevation: 8.0,
@@ -254,7 +283,7 @@ class _HomePageState extends State<HomePage> {
               _buildDate(),
               const SizedBox(height: 22.0),
               // Teacher version
-              if (true)
+              if (_role == 'T')
                 Row(
                   children: [
                     Expanded(child: _buildHost()),
@@ -263,11 +292,11 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               // Student version
-              // if (true)
-              //   Padding(
-              //     padding: const EdgeInsets.symmetric(horizontal: 80.0),
-              //     child: _buildJoin(128.0),
-              //   ),
+              if (_role != 'T')
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 80.0),
+                  child: _buildJoin(128.0),
+                ),
               const SizedBox(height: 52.0),
               Expanded(
                 child: _buildSchedule(),

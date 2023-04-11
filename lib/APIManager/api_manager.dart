@@ -8,13 +8,12 @@ class ApiManager {
 
   static ApiManager get instance => _instance;
 
-  static const String baseUrl =
-      // 'fdr8m8nvve.execute-api.us-east-1.amazonaws.com';
-      'localhost:3000';
+  static String baseUrl = '7mh5bz57ig.execute-api.us-east-1.amazonaws.com';
+  // (Platform.isIOS) ? 'localhost:3000' : '10.0.2.2:3000';
 
   Future<dynamic> get(String endpoint, [Map<String, dynamic>? params]) async {
-    // var url = Uri.https(baseUrl, endpoint, params);
-    var url = Uri.http(baseUrl, endpoint, params);
+    var url = Uri.https(baseUrl, endpoint, params);
+    // var url = Uri.http(baseUrl, endpoint, params);
     print(url);
     print(params);
     final response = await http.get(url);
@@ -27,8 +26,8 @@ class ApiManager {
   }
 
   Future<dynamic> post(String endpoint, dynamic body) async {
-    // var url = Uri.https(baseUrl, endpoint);
-    var url = Uri.http(baseUrl, endpoint);
+    var url = Uri.https(baseUrl, endpoint);
+    // var url = Uri.http(baseUrl, endpoint);
     print(url);
     print(body);
     final response = await http.post(url, body: json.encode(body));

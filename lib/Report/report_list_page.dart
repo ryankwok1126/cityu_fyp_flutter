@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ReportListPage extends StatefulWidget {
   const ReportListPage({super.key});
@@ -17,10 +18,11 @@ class _ReportListPageState extends State<ReportListPage> {
   List _lessons = [];
   bool _isloadingSchedule = true;
 
-  _getReportList() {
+  _getReportList() async {
+    final pref = await SharedPreferences.getInstance();
     String path = '/report/get_report_list';
     Map<String, dynamic> params = {
-      'member_id': 2,
+      'member_id': pref.getInt('id'),
     };
     ApiManager.instance.post(path, params).then((response) async {
       if (mounted) {
@@ -124,6 +126,7 @@ class _ReportListPageState extends State<ReportListPage> {
                       style: TextStyle(fontSize: 24.0),
                     ),
                   ),
+                  SizedBox(width: 24.0),
                 ],
               ),
             ),
